@@ -32,6 +32,9 @@ All examples in this repository are **anonymized and generalized**. No confident
 ## 📂 Folder Structure
 
 /agents → Scripts and templates for Machine, App, and DB Agents
+
 /dashboards → Sample JSON dashboard files and screenshots
+
 /health-rules → Custom health rule definitions and alert policies
+
 /docs → Guides and how-tos
