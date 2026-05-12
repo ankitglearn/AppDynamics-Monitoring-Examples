@@ -1,0 +1,17 @@
+#to install cluster agent 
+installClusterAgent: true
+
+# AppDynamics controller info (VALUES TO BE PROVIDED BY THE USER) 
+controllerInfo:
+ url: https://takeda-dev-test.saas.appdynamics.com:443
+ account: takeda-dev-test
+ accessKey : cd73068b-a55e-49a7-82f5-a46aa375c383
+
+# Cluster agent config
+clusterAgent:
+   nsToMonitorRegex: ^(aevidence-.*|ordino-.*|visynkb-*)$
+   appName: APMS-11071-BSN0022017-Datavisyn-Dev-Demo
+
+# Subcharts boolean install switches
+install:
+  metrics-server: false
