@@ -1,0 +1,80 @@
+[DBAgent-10] 25 Jun 2025 12:38:48,433  WARN MongoDBMonitorConfigResolver - Exception occurred while getting hostname for :- WUSVGASAILD006
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=wusvgasaild006:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketException: wusvgasaild006}, caused by {java.net.UnknownHostException: wusvgasaild006}}]
+        at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:180) ~[mongodb-driver-core-4.6.1.jar:?]
+        at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:44) ~[mongodb-driver-core-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:144) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:101) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:291) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:183) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.executeCommand(MongoDatabaseImpl.java:195) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:164) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:159) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:149) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.appdynamics.dbmon.dbagent.task.resolver.MongoDBMonitorConfigResolver.getUniqueHostIdForLicenseUsage(MongoDBMonitorConfigResolver.java:548) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.appdynamics.dbmon.dbagent.task.resolver.MongoDBMonitorConfigResolver.getResolvedHostDetails(MongoDBMonitorConfigResolver.java:483) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.appdynamics.dbmon.dbagent.task.resolver.ADBMonitorConfigResolver$1.load(ADBMonitorConfigResolver.java:89) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.appdynamics.dbmon.dbagent.task.resolver.ADBMonitorConfigResolver$1.load(ADBMonitorConfigResolver.java:86) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.google.common.cache.LocalCache$LoadingValueReference.loadFuture(LocalCache.java:3571) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache$Segment.loadSync(LocalCache.java:2313) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache$Segment.lockedGetOrLoad(LocalCache.java:2190) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2080) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache.get(LocalCache.java:4012) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:4035) ~[guava-32.1.2-jre.jar:?]
+        at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:5013) ~[guava-32.1.2-jre.jar:?]
+        at com.appdynamics.dbmon.dbagent.task.resolver.ADBMonitorConfigResolver.setAdditionalPropertiesInConfigs(ADBMonitorConfigResolver.java:351) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.appdynamics.dbmon.dbagent.task.resolver.ADBMonitorConfigResolver.run(ADBMonitorConfigResolver.java:208) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+		 at com.appdynamics.dbmon.dbagent.task.resolver.ADBMonitorConfigResolver.run(ADBMonitorConfigResolver.java:208) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.singularity.ee.util.javaspecific.scheduler.AgentScheduledExecutorServiceImpl$SafeRunnable.run(AgentScheduledExecutorServiceImpl.java:122) ~[agent-24.7.0-857.jar:?]
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_452]
+        at com.singularity.ee.util.javaspecific.scheduler.ADFutureTask$Sync.innerRunAndReset(ADFutureTask.java:335) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADFutureTask.runAndReset(ADFutureTask.java:152) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.access$101(ADScheduledThreadPoolExecutor.java:128) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.runPeriodic(ADScheduledThreadPoolExecutor.java:215) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.run(ADScheduledThreadPoolExecutor.java:253) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor$Worker.runTask(ADThreadPoolExecutor.java:694) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor$Worker.run(ADThreadPoolExecutor.java:726) ~[agent-24.7.0-857.jar:?]
+        at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+		
+		
+		
+		
+		
+		
+		
+		
+		--------------------------------------------------------------------
+		
+		[DBCollectorPool-468] 25 Jun 2025 12:41:16,244 ERROR ADBAvailabilityCollector - Error collecting data for database 'APMS-92813-SAIL-Dev-DB-MONGO-WUSVGASAILD006-DEV' with host 'rs0' , role 'MONGODB_REPLICASET_PRIMARY'
+com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN, servers=[{address=wusvgasaild005:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketException: wusvgasaild005}, caused by {java.net.UnknownHostException: wusvgasaild005}}]
+        at com.mongodb.internal.connection.BaseCluster.getDescription(BaseCluster.java:180) ~[mongodb-driver-core-4.6.1.jar:?]
+        at com.mongodb.internal.connection.SingleServerCluster.getDescription(SingleServerCluster.java:44) ~[mongodb-driver-core-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate.getConnectedClusterDescription(MongoClientDelegate.java:144) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate.createClientSession(MongoClientDelegate.java:101) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.getClientSession(MongoClientDelegate.java:291) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoClientDelegate$DelegateOperationExecutor.execute(MongoClientDelegate.java:183) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.executeCommand(MongoDatabaseImpl.java:195) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:164) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:159) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.mongodb.client.internal.MongoDatabaseImpl.runCommand(MongoDatabaseImpl.java:149) ~[mongodb-driver-sync-4.6.1.jar:?]
+        at com.singularity.ee.agent.dbagent.collector.db.nosql.mongo.MongoDBAvailabilityCollector.collectDBAvailabilityMetrics(MongoDBAvailabilityCollector.java:66) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.singularity.ee.agent.dbagent.collector.db.ADBAvailabilityCollector.run(ADBAvailabilityCollector.java:113) ~[db-agent.jar:Database Agent v24.6.0.4301 GA compatible with 4.5.2.0 Build Date  2024-06-26]
+        at com.singularity.ee.util.javaspecific.scheduler.AgentScheduledExecutorServiceImpl$SafeRunnable.run(AgentScheduledExecutorServiceImpl.java:122) ~[agent-24.7.0-857.jar:?]
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_452]
+        at com.singularity.ee.util.javaspecific.scheduler.ADFutureTask$Sync.innerRunAndReset(ADFutureTask.java:335) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADFutureTask.runAndReset(ADFutureTask.java:152) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.access$101(ADScheduledThreadPoolExecutor.java:128) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.runPeriodic(ADScheduledThreadPoolExecutor.java:215) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$ADScheduledFutureTask.run(ADScheduledThreadPoolExecutor.java:253) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor$Worker.runTask(ADThreadPoolExecutor.java:694) ~[agent-24.7.0-857.jar:?]
+        at com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor$Worker.run(ADThreadPoolExecutor.java:726) ~[agent-24.7.0-857.jar:?]
+        at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,244  INFO DBCollectorAgentMonitorDelegate - [APMS-92813-SAIL-Dev-DB-MONGO-WUSVGASAILD006-DEV] Stopping DB collector agent delegate...
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,244  INFO ADBCollector - DB collector [APMS-92813-SAIL-Dev-DB-MONGO-WUSVGASAILD006-DEV] shut down!
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,244  INFO ADBAvailabilityCollector - DB Availability Metrics collector [APMS-92813-SAIL-Dev-DB-MONGO-WUSVGASAILD006-DEV] shut down!
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,245  INFO DBCollectorAgentMonitorDelegate - DB collector agent monitor delegate [APMS-92813-SAIL-Dev-DB-MONGO-WUSVGASAILD006-DEV] shut down!
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,245  INFO DBAgentMonitor - DBAgentMonitor stopped
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,245  INFO MetricService - shutdown metric generation service.
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,245  INFO EventService - No events to flush.
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,251  INFO ADBDataReporter - EntityRegistrar is shutdown
+[DBCollectorPool-468] 25 Jun 2025 12:41:16,251  INFO ADBDataReporter - DBMeasurementUploader is shutdown
+[DBCollectorPool-50] 25 Jun 2025 12:41:16,254  WARN EventService - Error publishing events
