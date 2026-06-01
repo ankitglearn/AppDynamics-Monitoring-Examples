@@ -1,0 +1,20 @@
+<monitor>
+    <name>File Monitoring</name>
+    <type>managed</type>
+    <description>Counts .html and .zip files in date-based folders</description>
+    <monitor-configuration>
+    </monitor-configuration>
+
+    <monitor-run-task>
+        <execution-style>periodic</execution-style>
+        <name>Run</name>
+        <type>executable</type>
+        <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
+        <task-argument>
+        </task-argument>
+        <executable-task>
+            <type>file</type>
+            <file>File_Monitoring.bat</file>
+        </executable-task>
+    </monitor-run-task>
+</monitor>
