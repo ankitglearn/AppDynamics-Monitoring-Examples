@@ -1,0 +1,105 @@
+metricPrefix: "Custom Metrics|AWS Lambda|"
+
+namespace: "AWS/Lambda"
+
+accounts:
+  - displayAccountName: "Dev"
+    regions: ["us-east-1"]        # your Lambda region
+    # keys can stay empty on an EC2 instance profile
+    # awsAccessKey:
+    # awsSecretKey:
+
+# optional – pulls every function; give explicit names to narrow it
+dimensions:
+  - name: "FunctionName"
+    displayName: "Function"
+    values: [".*"] # Display all Lambda functions
+
+
+regionEndPoints:
+  us-east-1 : monitoring.us-east-1.amazonaws.com
+  #us-east-2 : monitoring.us-east-2.amazonaws.com
+
+cloudWatchMonitoring: "Basic"
+
+concurrencyConfig:
+  noOfAccountThreads: 3
+  noOfRegionThreadsPerAccount: 3
+  noOfMetricThreadsPerRegion: 3
+  threadTimeOut: 30
+
+# Global metrics config for all accounts
+metricsConfig:
+
+    # By default, all metrics retrieved from cloudwatch are 'Average' values.
+    # This option allows you to override the metric type.
+    # metricName supports regex
+    # Allowed statTypes are: ave, max, min, sum, samplecount
+    #
+    # Note: Irrespective of the metric type, value will still be reported as
+    # Observed value to the Controller
+    includeMetrics:
+      - name: "Invocations"
+        statType: "sum"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "Errors"
+#        alias: "Errors"
+        statType: "sum"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "Duration"
+#        alias: "Duration"
+        statType: "ave"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "Throttles"
+#        alias: "Throttles"
+        statType: "sum"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "DeadLetterErrors"
+#        alias: "DeadLetterErrors"
+        statType: "ave"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "Availability"
+#        alias: "Availability"
+        statType: "ave"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+      - name: "IteratorAge"
+#        alias: "IteratorAge"
+        statType: "max"
+        delta: false
+        multiplier: 1
+        aggregationType: "OBSERVATION"
+        timeRollUpType: "AVERAGE"
+        clusterRollUpType: "INDIVIDUAL"
+
+    metricsTimeRange:
+      startTimeInMinsBeforeNow: 5
+      endTimeInMinsBeforeNow: 0
+
+    # Rate limit ( per second ) for GetMetricStatistics, default value is 400. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html
+    getMetricStatisticsRateLimit: 400
+
+    maxErrorRetrySize: 0
