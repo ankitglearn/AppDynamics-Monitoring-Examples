@@ -1,0 +1,199 @@
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+echo $PATH
+
+export PATH=$PATH:/usr/local/bin
+
+chmod +x /usr/local/bin/helm
+
+(For permanent fix, add this line to ~/.bashrc or ~/.profile and run source ~/.bashrc.)
+
+
+
+WARNING: Kubernetes configuration file is group-readable. This is insecure.
+Location /root/.kube/config
+
+chmod 600 ~/.kube/config   # or: chmod go-r ~/.kube/config
+
+Error: Installation failed: template: cluster-agent/templates/NOTES.txt:15:162:
+executing "cluster-agent/templates/NOTES.txt" at <dict>: wrong type for value; expected map[string]interface {}; got string
+
+Common culprits:
+
+A key is placed at the wrong level (indentation / nesting).
+A key name doesn’t exist in the chart (e.g., clusterAgentImage:—not expected by the current chart).
+A complex value (map) was overwritten by a scalar (string).
+Mixed up boolean flags under wrong parents, e.g. metrics-server not under install:.
+
+Run a dry-run with debug to see how Helm reads your values:
+
+
+Steps to setup Cluster agent on EKS cluster:
+
+1.	Delete all the previously installed CustomResourceDefinition (CRDs) related to Splunk AppDynamics Agent by using these commands:
+
+$ kubectl get crds
+
+Lists all CRDs currently installed in your cluster.
+Purpose: Check if any old AppDynamics CRDs exist from a previous installation.
+
+$ kubectl delete crds <crd-names>
+
+Deletes outdated or conflicting CRDs.
+Purpose: Prevent version conflicts between old CRDs and the new Helm chart installation.
+If old CRDs remain, the new Operator might fail or behave incorrectly.
+
+
+2.	Add the chart repository to Helm:
+
+helm repo add appdynamics-cloud-helmcharts https://appdynamics.jfrog.io/artifactory/appdynamics-cloud-helmcharts/
+
+By adding this repo, you tell Helm where to find the official AppDynamics Cluster Agent chart.
+
+
+3.	Create a namespace for appdynamics in your cluster:
+
+kubectl create namespace appdynamics
+
+To check what all namce space is present 
+
+kubectl get namespaces
+
+4. create values.yaml / values-ca1.yaml /opt/appdynamics-helm/values.yaml
+
+
+# To install Cluster Agent 
+installClusterAgent: true
+
+
+# controller info
+controllerInfo:
+  url: https://takeda.saas.appdynamics.com:443
+  account:  takeda
+  accessKey: dcf911d3-61b3-4e71-bd1d-39a945c56ad8  
+
+# Cluster agent config
+
+clusterAgent:
+  createSecret: true
+  nsToMonitorRegex: ^(dash-.*|plotly-.*)$
+  appName: APMS-10758-BSN0020183-PlotlyDash-Prod
+  
+
+# Subcharts boolean install switches
+install:
+  metrics-server: false
+  
+or 
+
+•	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+Metrics Server is a lightweight aggregator that collects resource usage metrics (CPU, memory) from all nodes and pods.
+The AppDynamics Cluster Agent relies on these metrics to display accurate resource utilization in the Controller dashboards.
+
+6. To see the informastion regarding available configration use below commands
+
+helm show values appdynamics-cloud-helmcharts/cluster-agent
+
+
+7.	Deploy the Cluster Agent to the appdynamics namespace:
+
+helm install cluster-agent appdynamics-cloud-helmcharts/cluster-agent \
+  --namespace appdynamics \
+  -f /opt/appdynamics-helm/values.yaml \
+  --version 1.34.1544
+
+
+helm upgrade --install cluster-agent appdynamics-cloud-helmcharts/cluster-agent \
+  --namespace appdynamics \
+  -f /opt/appdynamics-helm/values.yaml \
+  --version 1.34.1544 \
+  --reset-values
+
+
+
+8. Validate Installastion 
+
+helm status cluster-agent -n appdynamics
+
+kubectl get pods -n appdynamics
+
+9. Check logs
+
+kubectl logs <pod-name> -n appdynamics
+
+
+clusterName: APMS-10758-BSN0020183-PlotlyDash-Test
+
+
+
+
+10. Optional:Create secret for access key
+
+kubectl -n appdynamics create secret generic cluster-agent-secret \
+  --from-literal=controller-key='<access-key>' \
+  --from-literal=
+
+
+
+curl -v -k \
+  -H "Authorization: Basic $(echo -n '<account>:<accessKey>' | base64)" \
+  "https://<controller-url>:443/sim/v2/agent/clusterRegistration"
+``
+
+  Command to create secret
+
+kubectl create secret generic appd-accesskey-secret \
+  --from-literal=accessKey= \
+  -n appdynamics
+  
+  
+kubectl -n appdynamics create secret generic cluster-agent-secret \
+  --from-literal=controller-key='838cfc00-99f8-4cf2-8be8-ed7c71df2c28' \
+  -n appdynamics
+
+  Command to list secret in the namespace
+  kubectl get secret cluster-agent-secret -n appdynamics
+  
+  Command to delete the secret in the namespace
+  kubectl delete secret cluster-agent-secret -n appdynamics
+  
+  Command to uninstall helm release
+  helm uninstall cluster-agent -n appdynamics
+  
+  Command To Add Repo
+  helm repo add appdynamics-cloud-helmcharts https://appdynamics.jfrog.io/artifactory/appdynamics-cloud-helmcharts/
+  
+  Command to view list of available chart version 
+  helm search repo appdynamics-cloud-helmcharts/cluster-agent --versions
+  
+  Command to confirm the version of deployed image
+  kubectl -n appdynamics get deploy appdynamics-operator -o jsonpath='{..image}'
+ 
+  
+  Command to check your release   
+  helm list -n appdynamics
+  
+  Command to check values inside the release
+  helm get values <release-name> -n appdynamics
+  
+  command to check helm version/upgrade history
+  helm history cluster-agent -n appdynamics
+  
+  command to check deployments 
+  kubectl get deployments -n appdynamics
+  
+  command to describe deployments
+  kubectl describe deployments apms-10758-bsn0020183-plotlydash-dev-appdynamics -n appdynamics
+  
+  command to list all services running in all namespace
+  kubectl get svc -A
+  kubectl get svc -o wide
+  
+  
+  
+  
+  
+  
+  
+  
